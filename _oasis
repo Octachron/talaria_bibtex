@@ -1,0 +1,20 @@
+OASISFormat: 0.4
+Name:        Talaria-bibtex
+Version:     0.0
+Synopsis:    A bibtex parser for Talaria
+Authors:     octachron
+License:     LGPL-3.0
+Plugins:     META (0.4)
+
+Library "Talaria-bibtex"
+  Path:       .
+  BuildTools: ocamlbuild
+  BuildDepends: Umap
+  Modules:    Bibtex
+  
+Executable "Test"
+  Path:       .
+  BuildTools: ocamlbuild
+  BuildDepends: Umap
+  MainIs:     Test.ml
+  
