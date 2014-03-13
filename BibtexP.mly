@@ -3,16 +3,17 @@
 %token LCURL COMMA RCURL EQUAL EOF
 %{
 open BibtexT
-let data= Database.empty
+open Bibtex
+module D=Bibtex.Database
 %}
-%type <BibtexT.data> main
+%type <Bibtex.data> main
 %start main
 
 %%
 
 %public main: 
-	| ne=entry d=main { let (name,e)= ne in Database.add name e d}
-	| EOF {Database.empty}
+	| ne=entry d=main { let (name,e)= ne in D.add name e d}
+	| EOF {D.empty}
 
 entry:
 	| kind=KIND LCURL name=TEXT COMMA e=properties RCURL { let e= Kind.s (Parse.k kind) e in (name,e) } 
@@ -23,5 +24,6 @@ properties:
 
 rtext:
 	| s=TEXT {s}
+	| s=TEXT EQUAL rs=rtext {s^"="^rs}
 	| s1=TEXT COMMA rs=rtext  {s1 ^","^ rs }
 	| LCURL s1=TEXT RCURL rs=rtext {s1 ^ rs } 

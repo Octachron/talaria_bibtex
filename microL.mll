@@ -9,9 +9,11 @@ let nops = [^ ',' '-']
 let num=['0'-'9']
 let space= [' ' '\t']
 let bnops=nops # space
+let nnum = nops # num
 
 rule pages=parse
 | space {pages lexbuf}
+| nnum+ as s { WORD s }
 | num+ as n { NUM(int_of_string n)} 
 | '-' { MINUS }
 | eof {EOF}
@@ -29,5 +31,5 @@ and names= parse
 and tags = parse
 | space { tags lexbuf }
 | ',' { COMMA }
-| bnops+ as s { WORD s }
+| bnops [^ ',']* as s { WORD s }
 | eof {EOF}

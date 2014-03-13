@@ -1,13 +1,9 @@
-open MicroT
-open BibtexT
-open BibtexP
+open Bibtex
 let p=Printf.printf
-let s="@article{Essai,
- title={Quel titre!},
- tags={neant, rien},
- pages={892-893},
- year={2053}
-}"
+open BibtexP
+open MicroP
+let f=open_in "test.bib"
+
 
 let rec scanp lexb= match MicroL.pages lexb with
 	| MicroP.EOF -> p "EOF \n"
@@ -20,9 +16,7 @@ let rec scanp lexb= match MicroL.pages lexb with
 
 
 
-
-let lexbuf = Lexing.from_string s
-let bib = BibtexP.main BibtexL.main lexbuf
+let bib = Bibparse.parse @@ Lexing.from_channel f
   
 
 let rec scan lexbuf= match BibtexL.main lexbuf with
@@ -34,19 +28,41 @@ let rec scan lexbuf= match BibtexL.main lexbuf with
 	| KIND s->p "Type \"%s\"" s; scan lexbuf
 	| EQUAL -> p "="; scan lexbuf 
 
-
-let mayp (type r) (module M:Umap.PropertySig with type r=r) f e= try p f @@ M.get e with
-| Not_found -> ()
-
 let mayr (type r) entry (module M:Umap.PropertySig with type r=r) f =  try f @@ M.get entry with
 | Not_found -> ()  
 
 let ( *? ) = mayr
 
+
+
+let mayp (type r) (module M:Umap.PropertySig with type r=r) fmt entry= 
+entry *? (module M ) @@ p fmt 
+
+let decorated op en pr e = print_string op; pr e; print_string en
+
+let decoratedN name= decorated (Printf.sprintf "\t %s: [" name) "]\n"
+
+let plist sep pr l=
+	let rec inner l = match l with
+	| [] -> ()
+	| [a] -> pr a 
+	| a::q -> pr a; p sep; inner q   in
+	inner l
+
+let plistn name pr = decoratedN name @@ plist ", "  pr
+
 let () = Database.iter (fun id entry ->
 	p "Entry : %s \n " id;
-	mayp (module Title) "\t Title : %s \n" entry;    
-	mayp (module Year) "\t Year : %d \n" entry;
-	entry *? (module Tags)  @@  fun l -> p "\t Tags: ["; List.iter (p "%s,") l ; p "]\n";
-	entry *? (module Pages) @@ function Loc k -> p "\t Pages: %d \n" k | Interv(k,l) -> p "\t Pages: %d-%d \n" k l
+	entry *?  (module Title) @@ decoratedN "Title" print_string;    
+	entry *? (module Authors) @@ plistn "Authors" (fun {firstname;lastname} -> p "%s %s" firstname lastname);
+	entry *? (module Year) @@ decoratedN "Year" print_int;
+	entry *? (module Journal) @@  decoratedN "Journal" print_string;
+	entry *? (module Volume) @@  decoratedN "Volume" print_int;
+	entry *? (module Number) @@  decoratedN "Number" print_int;
+	entry *? (module Pages) @@ (function Loc k -> p "\t Pages: [%d] \n" k | Interv(k,l) -> p "\t Pages: [%d-%d] \n" k l);
+	entry *? (module Arxiv) @@  decoratedN "Arxiv" print_string;
+	entry *? (module Doi) @@  decoratedN "Doi" print_string;
+	entry *? (module Tags)  @@  plistn "Tags"  (p "%s"); 
+	entry *? (module Abstract) @@  decoratedN "Abstract" print_string;
+	
 ) bib

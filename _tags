@@ -20,3 +20,4 @@
 <*.ml{,i}>: pkg_Umap
 # OASIS_STOP
 true: use_menhir
+false: debug

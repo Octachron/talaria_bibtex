@@ -5,18 +5,19 @@
 %token COMMA, MINUS, AND, EOF
 
 %{
-open MicroT
+open Bibtex
 %}
 
-%type <MicroT.name list> names
+%type <Bibtex.name list> names
 %type <string list> tags
-%type <MicroT.pages> pages
+%type <Bibtex.pages> pages
 %start pages tags names
 
 %%
 
 %public pages:
 	| l=NUM EOF{ Loc l }
+	| p=WORD l=NUM EOF{Loc l}
 	| l=NUM MINUS u=NUM EOF{Interv (l,u)}
 
 %public tags:

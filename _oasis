@@ -1,6 +1,6 @@
 OASISFormat: 0.4
 Name:        Talaria-bibtex
-Version:     0.0
+Version:     0.1.1
 Synopsis:    A bibtex parser for Talaria
 Authors:     octachron
 License:     LGPL-3.0
@@ -10,7 +10,8 @@ Library "Talaria-bibtex"
   Path:       .
   BuildTools: ocamlbuild
   BuildDepends: Umap
-  Modules:    Bibtex
+  Modules:    Bibtex, Bibparse
+  InternalModules: BibtexL, BibtexP, MicroP, MicroL, BibtexT
   
 Executable "Test"
   Path:       .
