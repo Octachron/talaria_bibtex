@@ -12,6 +12,7 @@ let rec scanp lexb= match MicroL.pages lexb with
 	| MicroP.WORD(s)-> p "WORD(%s)\n" s; scanp lexb
 	| MicroP.COMMA -> p"<,>"
 	| MicroP.AND -> p"<and>"
+	| MicroP.SEP -> p "</>"; scanp lexb
 
 
 
@@ -26,7 +27,7 @@ let rec scan lexbuf= match BibtexL.main lexbuf with
 	| RCURL -> p ">"; scan lexbuf
 	| COMMA -> p ":,:"; scan lexbuf
 	| KIND s->p "Type \"%s\"" s; scan lexbuf
-	| EQUAL -> p "="; scan lexbuf 
+	| EQUAL -> p "="; scan lexbuf
 
 let mayr (type r) entry (module M:Umap.PropertySig with type r=r) f =  try f @@ M.get entry with
 | Not_found -> ()  
@@ -61,7 +62,7 @@ let () = Database.iter (fun id entry ->
 	entry *? (module Number) @@  decoratedN "Number" print_int;
 	entry *? (module Pages) @@ (function Loc k -> p "\t Pages: [%d] \n" k | Interv(k,l) -> p "\t Pages: [%d-%d] \n" k l);
 	entry *? (module Arxiv) @@  decoratedN "Arxiv" print_string;
-	entry *? (module Doi) @@  decoratedN "Doi" print_string;
+	entry *? (module Doi) @@  plistn "Doi" print_string;
 	entry *? (module Tags)  @@  plistn "Tags"  (p "%s"); 
 	entry *? (module Abstract) @@  decoratedN "Abstract" print_string;
 	

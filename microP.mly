@@ -2,7 +2,7 @@
 
 %token <string> WORD
 %token <int> NUM
-%token COMMA, MINUS, AND, EOF
+%token COMMA, MINUS, AND, EOF, SEP
 
 %{
 open Bibtex
@@ -11,7 +11,8 @@ open Bibtex
 %type <Bibtex.name list> names
 %type <string list> tags
 %type <Bibtex.pages> pages
-%start pages tags names
+%type <string list> path
+%start pages tags names path
 
 %%
 
@@ -30,3 +31,7 @@ open Bibtex
 
 name:
 	| lastname=WORD COMMA firstname=WORD  { {firstname; lastname} }
+
+%public path:
+	| w=WORD EOF {[w]}
+	| w=WORD SEP p=path {w::p}

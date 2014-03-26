@@ -11,6 +11,8 @@ let space= [' ' '\t']
 let bnops=nops # space
 let nnum = nops # num
 
+let nsep= [^ '/']
+
 rule pages=parse
 | space {pages lexbuf}
 | nnum+ as s { WORD s }
@@ -32,4 +34,9 @@ and tags = parse
 | space { tags lexbuf }
 | ',' { COMMA }
 | bnops [^ ',']* as s { WORD s }
+| eof {EOF}
+
+and path= parse
+| '/' {SEP}
+| nsep+ as s {WORD s}
 | eof {EOF}

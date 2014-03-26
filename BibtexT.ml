@@ -24,6 +24,8 @@ let state =function
 | s -> raise @@ Unknown_attribute ("state",s)  
 
 let tags s= MicroP.tags MicroL.tags @@ ls s 
+
+let path s = MicroP.path MicroL.path @@ ls s 
 end
 
 let combine (type r) (module M:Umap.PropertySig with type r=r) parser str opr=
@@ -40,7 +42,7 @@ let process = Database.empty
 	|>  Database.add "volume" (combine (module Volume) Parse.num )
 	|>  Database.add "number" (combine (module Number) Parse.num )
 	|>  Database.add "pages" (combine (module Pages) Parse.pages )
-	|>  Database.add "doi" (combine (module Doi) Parse.id )
+	|>  Database.add "doi" (combine (module Doi) Parse.path )
 	|>  Database.add "arxiv" (combine (module Arxiv) Parse.id )
 	|>  Database.add "abstract" (combine (module Abstract) Parse.id )
 	|>  Database.add "state" (combine (module State) Parse.state )
