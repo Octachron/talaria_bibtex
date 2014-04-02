@@ -5,12 +5,12 @@
 %token COMMA, MINUS, AND, EOF, SEP
 
 %{
-open Bibtex
+open MicroT
 %}
 
-%type <Bibtex.name list> names
+%type <MicroT.name list> names
 %type <string list> tags
-%type <Bibtex.pages> pages
+%type <MicroT.pages> pages
 %type <string list> path
 %start pages tags names path
 

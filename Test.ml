@@ -29,14 +29,14 @@ let rec scan lexbuf= match BibtexL.main lexbuf with
 	| KIND s->p "Type \"%s\"" s; scan lexbuf
 	| EQUAL -> p "="; scan lexbuf
 
-let mayr (type r) entry (module M:Umap.PropertySig with type r=r) f =  try f @@ M.get entry with
+let mayr (type p) entry (module M:Orec.Repr.Sig with type p=p) f =  try f @@ M.get entry with
 | Not_found -> ()  
 
 let ( *? ) = mayr
 
 
 
-let mayp (type r) (module M:Umap.PropertySig with type r=r) fmt entry= 
+let mayp (type p) (module M:Orec.Repr.Sig with type p=p) fmt entry= 
 entry *? (module M ) @@ p fmt 
 
 let decorated op en pr e = print_string op; pr e; print_string en

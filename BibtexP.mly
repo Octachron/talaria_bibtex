@@ -1,13 +1,14 @@
 %token <string> TEXT
 %token <string> KIND
 %token LCURL COMMA RCURL EQUAL EOF
-%{
-open BibtexT
-open Bibtex
-module D=Bibtex.Database
-%}
 %type <Bibtex.data> main
 %start main
+
+%{
+open Bibtex
+open BibtexT
+module D=Bibtex.Database
+%}
 
 %%
 
@@ -16,11 +17,11 @@ module D=Bibtex.Database
 	| EOF {D.empty}
 
 entry:
-	| kind=KIND LCURL name=TEXT COMMA e=properties RCURL { let e= Kind.s (Parse.k kind) e in (name,e) } 
+	| kind=KIND LCURL name=TEXT COMMA e=properties RCURL { let e= Kind.Repr.s kind e in (name,Id.set e name) } 
 
 properties:
-	| p=TEXT EQUAL LCURL t=rtext RCURL COMMA e=properties { e |> setAttribute p t }  
-	| p=TEXT EQUAL LCURL t=rtext RCURL {empty |> setAttribute p t }
+	| key=TEXT EQUAL LCURL p=rtext RCURL COMMA e=properties { e |> setAttribute key p}  
+	| key=TEXT EQUAL LCURL p=rtext RCURL {Orec.Repr.empty |> setAttribute key p }
 
 rtext:
 	| s=TEXT {s}

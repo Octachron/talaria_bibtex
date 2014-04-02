@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: d86977698de621892df37ec4e590c161)
+# DO NOT EDIT (digest: 7d4fb4c5a635c381d3b294ea426f5fbd)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -16,8 +16,9 @@
 # Library Talaria-bibtex
 "Talaria-bibtex.cmxs": use_Talaria-bibtex
 # Executable Test
-"Test.byte": pkg_Umap
-<*.ml{,i}>: pkg_Umap
+"Test.byte": pkg_Orec
+<*.ml{,i}>: pkg_Orec
 # OASIS_STOP
 true: use_menhir
 false: debug
+<*.mly>:pkg_Orec

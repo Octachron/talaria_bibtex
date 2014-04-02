@@ -9,13 +9,13 @@ Plugins:     META (0.4)
 Library "Talaria-bibtex"
   Path:       .
   BuildTools: ocamlbuild
-  BuildDepends: Umap
+  BuildDepends: Orec
   Modules:    Bibtex, Bibparse
-  InternalModules: BibtexL, BibtexP, MicroP, MicroL, BibtexT
+  InternalModules: BibtexL, BibtexP, MicroP, MicroL, BibtexT, MicroT
   
 Executable "Test"
   Path:       .
   BuildTools: ocamlbuild
-  BuildDepends: Umap
+  BuildDepends: Orec
   MainIs:     Test.ml
   

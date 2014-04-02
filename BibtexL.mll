@@ -1,5 +1,7 @@
+
 {
 open BibtexP
+open Bibtex
 }
 
 let ops = ['{' '}' ',' '=']
