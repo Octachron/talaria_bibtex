@@ -13,7 +13,10 @@ let num s= int_of_string s
 
 end
 
-open Orec.Repr
+
+module type Base= Orec.Repr.Base with type rpr=string
+module type PropertySig= Orec.Repr.Sig with type rpr=string
+module Property(X:Base):(PropertySig with type p=X.p)  = struct  include( Orec.Repr.Property(X))  end
 
 module Id =Property(struct
 	let name="Id"
@@ -48,7 +51,7 @@ module Authors = Property(struct
 	let name="author"
 	type p=name list
 	type rpr=string
-	let repr p= String.concat ", " @@  List.map (fun {firstname; lastname} -> String.concat " and " [firstname;lastname] ) p  
+	let repr p= String.concat " and " @@  List.map (fun {firstname; lastname} -> String.concat ", " [firstname;lastname] ) p  
 	let specify s = MicroP.names MicroL.names @@ Conv.ls s 
 end)
 
