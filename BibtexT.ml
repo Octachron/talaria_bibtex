@@ -11,7 +11,7 @@ exception Unknown_attribute of string*string
 
 
 
-let ( |>> ) database (module M:Orec.Repr.Sig with type rpr=string)=
+let ( |>> ) database (module M:Rec.Sig with type rpr=string)=
 	let f str orec= M.Repr.set orec str in
 	Database.add (M.name) f database
 
@@ -31,6 +31,8 @@ let dtb= Database.empty
 	|>> (module State)
 	|>> (module Tags)
 	|>> (module Booktitle) 
+	|>> (module Location)
+	|>> (module Conference) 
 in ref dtb
 
 
@@ -47,6 +49,6 @@ let setAttribute key repr entry =
 
 
 
-let empty=Orec.Repr.empty
+let empty=Rec.empty
 let data= Database.empty
 	

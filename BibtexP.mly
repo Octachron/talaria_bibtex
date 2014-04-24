@@ -21,7 +21,7 @@ entry:
 
 properties:
 	| key=TEXT EQUAL LCURL p=rtext RCURL COMMA e=properties { e |> setAttribute key p}  
-	| key=TEXT EQUAL LCURL p=rtext RCURL {Orec.Repr.empty |> setAttribute key p }
+	| key=TEXT EQUAL LCURL p=rtext RCURL {Rec.empty |> setAttribute key p }
 
 rtext:
 	| s=TEXT {s}
