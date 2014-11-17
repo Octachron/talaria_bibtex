@@ -43,6 +43,22 @@ module IntProperty( X: sig val name : string end ) =
   ) 
 end
 
+module StrSet = Set.Make(String)
+
+module StrSetProperty( X: sig val name : string end ) = 
+  struct include(
+	Property( struct 
+		let name=X.name
+		type p = StrSet.t
+		type rpr = string 
+ 		let repr x = StrSet.elements x |> String.concat ","
+		let specify s =
+			  Conv.ls s 
+			|> MicroP.tags MicroL.tags 
+			|>  StrSet.of_list  
+	end) )
+  end 
+
 
 module Id =StrProperty(struct let name = "Id" end )
 
@@ -109,13 +125,9 @@ module Arxiv=Property(struct
 	let specify=Conv.id
 end)
 
-module Tags=Property(struct
-	let name="tags"	
-	type p=string list
-	type rpr=string
-	let repr=String.concat ","
-	let specify s=MicroP.tags MicroL.tags @@ Conv.ls s 
-end)
+module Tags=StrSetProperty(struct let name="tags" end)	
+
+module Src = StrSetProperty(struct let name = "src" end)
 
 
 module State=Property(struct

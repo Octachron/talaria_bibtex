@@ -21,7 +21,11 @@ entry:
 
 properties:
 	| key=TEXT EQUAL LCURL p=rtext RCURL COMMA e=properties { e |> setAttribute key p}  
-	| key=TEXT EQUAL LCURL p=rtext RCURL {Rec.empty |> setAttribute key p }
+	| key=TEXT EQUAL LCURL p=rtext RCURL opt_comma {Rec.empty |> setAttribute key p }
+
+opt_comma:
+	| 	{()}
+	| COMMA {()}
 
 rtext:
 	| s=TEXT {s}

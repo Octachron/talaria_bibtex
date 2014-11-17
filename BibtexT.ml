@@ -30,6 +30,7 @@ let dtb= Database.empty
 	|>> (module Abstract)
 	|>> (module State)
 	|>> (module Tags)
+	|>> (module Src)
 	|>> (module Booktitle) 
 	|>> (module Location)
 	|>> (module Conference) 
