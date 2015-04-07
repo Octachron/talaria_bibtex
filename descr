@@ -1,0 +1,3 @@
+A bibtex file parser
+
+talaria_bibtex is a strongly typed parser for bibtex file using open records.

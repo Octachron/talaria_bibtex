@@ -1,7 +1,5 @@
-
 {
-open BibtexP
-open Bibtex
+open Parser
 }
 
 let ops = ['{' '}' ',' '=']

@@ -1,0 +1,9 @@
+name: "talaria_bibtex"
+opam-version: "1.2"
+version: "0.5.0"
+maintainer: "octa@polychoron.fr"
+build: [
+	"ocaml" "pkg/build.ml" "native=%{ocaml-native}%"
+        	                "native-dynlink=%{ocaml-native-dynlink}%"
+]
+depends: ["ocamlfind" "orec" "menhir"]
