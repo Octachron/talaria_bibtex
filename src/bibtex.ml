@@ -6,9 +6,9 @@ module Database= Fields.Database
 		   
 module Parser = struct
 include(Parser)
-let add_key key= let open Parser_aux in
+let add_field key= let open Parser_aux in
 		 keydtb := !keydtb |>> key
-let remove_key key = let open Parser_aux in
+let remove_field key = let open Parser_aux in
 		 let open Fields in
 		 keydtb := Database.remove key.name !keydtb
 end
