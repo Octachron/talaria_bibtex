@@ -6,7 +6,7 @@ include( Orec.Namespace_sig )
 type 'a named_field = {name : string; f:'a field; conv:('a,string) bijection }
 	 
 (** Create a string view from a named_field *)		  
-val str : 'a named_field -> (Orec.imm Orec.getter, string option) field_action
+val str : 'a named_field -> string field
 
 (** Field creation helper *)
 val named_field : ('a, string) bijection -> string -> 'a named_field
