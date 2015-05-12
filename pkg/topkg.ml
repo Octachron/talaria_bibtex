@@ -142,7 +142,7 @@ end = struct
 end
 
 module Exts : Exts = struct
-  let interface = [".mli"; ".cmi"; ".cmti"]
+  let interface = [ ".cmi"; ".cmti"]
   let interface_opt = ".cmx" :: interface
   let library = [".cma"; ".cmxa"; ".cmxs"; ".a"]
   let module_library = (interface_opt @ library)
