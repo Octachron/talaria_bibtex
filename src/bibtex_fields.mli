@@ -1,11 +1,12 @@
+(** Predefined Bibtex fields *)
 
 include (module type of MicroT)
-	  
+
 exception Unknown_attribute of string * string
-include module type of Orec.Namespace()
+include Orec.Namespace.S
 type 'a named_field = {name : string; f:'a field; conv:('a,string) bijection }
-	 
-(** Create a string view from a named_field *)		  
+
+(** Create a string view from a named_field *)
 val str : 'a named_field -> string field
 
 (** Field creation helper *)
@@ -36,14 +37,14 @@ val state : state named_field
 val abstract : string named_field
 val location : string named_field
 val conference : string named_field
-			
-(** Direct access function for compulsory field *)			
+
+(** Direct access function for compulsory field *)
 val get_uid : t -> string
 val get_kind : t -> kind
 
 (** Direct access function for field with a meaningful default value *)
 val get_state : t -> state
 
-(** Type alias *)			      
+(** Type alias *)
 type entry = t
 type data = entry Database.t

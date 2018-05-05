@@ -1,3 +1,0 @@
-true: package(orec)
-true: use_menhir
-true: bin_annot

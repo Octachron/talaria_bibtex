@@ -1,0 +1,9 @@
+(jbuild_version 1)
+(menhir ((modules (parser microP))))
+(ocamllex ((modules (lexer microL))))
+
+(library (
+  (name bibtex)
+  (public_name talaria_bibtex)
+  (libraries (orec))
+))

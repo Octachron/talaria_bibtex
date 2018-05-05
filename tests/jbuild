@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executable (
+(name test)
+(libraries (bibtex))
+))
+
+(alias
+ ((name    runtest)
+  (deps    (test.bib test.exe))
+  (action  (run ./test.exe))))

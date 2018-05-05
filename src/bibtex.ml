@@ -15,3 +15,6 @@ end
 					   
 let parse=Parser.main Lexer.main 
 
+module MicroP = MicroP
+module MicroL=MicroL
+module Lexer=Lexer
