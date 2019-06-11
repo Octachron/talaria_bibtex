@@ -18,7 +18,7 @@ open MicroT
 
 %public pages:
 	| l=NUM EOF{ Loc l }
-	| p=WORD l=NUM EOF{Loc l}
+	| WORD l=NUM EOF{Loc l}
 	| l=NUM MINUS u=NUM EOF{Interv (l,u)}
 
 %public tags:

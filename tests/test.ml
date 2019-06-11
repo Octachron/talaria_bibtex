@@ -1,6 +1,5 @@
 open Bibtex
 let p=Printf.printf
-open MicroP
 let f=open_in "test.bib"
 
 

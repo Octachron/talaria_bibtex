@@ -1,9 +1,9 @@
 build:
-	jbuilder build @install
+	dune build @install
 
 .PHONY:tests
 tests:
-	jbuilder runtest
+	dune runtest
 
 clean:
-	jbuilder clean
+	dune clean
