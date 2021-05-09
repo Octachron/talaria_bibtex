@@ -3,6 +3,6 @@ opam-version: "1.2"
 version: "0.5.0"
 maintainer: "octa@polychoron.fr"
 build:[
- ["jbuilder" "build" "-p" name "-j" jobs]
+ ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: ["ocamlfind" {build} "orec" "menhir" {build} ]
