@@ -1,11 +1,2 @@
+(tests (names test) (deps test.bib) (libraries bibtex))
 
-(executable
-  (name test)
-  (libraries bibtex)
-)
-
-(alias
- (name runtest)
-  (deps test.bib test.exe)
-  (action  (run ./test.exe))
-)
