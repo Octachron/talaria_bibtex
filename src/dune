@@ -2,7 +2,8 @@
 (ocamllex (modules lexer microL))
 
 (library
-  (name bibtex)
-  (public_name talaria_bibtex)
-  (libraries orec)
+ (name bibtex)
+ (wrapped true)
+ (public_name talaria-bibtex)
+ (libraries orec)
 )
