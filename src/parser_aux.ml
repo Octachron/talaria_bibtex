@@ -28,6 +28,7 @@ let keydtb=
 exception Unknown_attribute of string
 
 let ( $= )key value =
+  let key = String.trim key in
   try ( Database.find key !keydtb ^= value  )
   with
   |Not_found ->  raw |= fun m -> Database.add key value m

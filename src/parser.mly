@@ -7,7 +7,7 @@
 %{
 open Parser_aux
 open Bibtex_fields
-     %}
+%}
 
 %%
 

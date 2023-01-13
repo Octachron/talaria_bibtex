@@ -3,8 +3,8 @@ open Parser
 }
 
 let ops = ['{' '}' ',' '=']
-let nops = [^ '{' '}' ',' '=']
 let space= [' ' '\t']
+let nops = [^ '{' '}' ',' '=']
 let bnops=nops # space # ['\n']
 
 rule main= parse
@@ -14,7 +14,6 @@ rule main= parse
 | '='  { EQUAL }
 |  '\n'  { Lexing.new_line lexbuf; main lexbuf}
 | ',' { COMMA }
-(*| "and"  {AND} *)
 | '@'(nops+ as s)  {KIND s}
 | (bnops nops*) as s  { TEXT s }
 | eof {EOF}
