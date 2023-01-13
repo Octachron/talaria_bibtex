@@ -3,7 +3,9 @@
 include (module type of MicroT)
 
 exception Unknown_attribute of string * string
+
 include Orec.Namespace.S
+
 type 'a named_field = {name : string; f:'a field; conv:('a,string) bijection }
 
 (** Create a string view from a named_field *)
@@ -48,3 +50,8 @@ val get_state : t -> state
 (** Type alias *)
 type entry = t
 type data = entry Database.t
+
+(** Raw database and entries *)
+type raw_entry = { uid:string; kind:string; raw: string Database.t  }
+val default_keys : string field Database.t
+val check: ?with_keys: string field Database.t -> raw_entry Database.t -> data

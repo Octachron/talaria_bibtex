@@ -1,27 +1,28 @@
 %token <string> TEXT
 %token <string> KIND
 %token LCURL COMMA RCURL EQUAL EOF
-%type <Fields.data> main
+%type < Fields.raw_entry Fields.Database.t> main
 %start main
 
 %{
-open Parser_aux
-open Fields
+  let add raw_entry database = Fields.Database.add raw_entry.Fields.uid raw_entry database
 %}
 
 %%
 
 %public main:
-	| ne=entry d=main { let (name,e)= ne in Database.add name e d}
-	| EOF {Database.empty}
+	| entry=entry d=main { add entry d}
+	| EOF {Fields.Database.empty}
 
 entry:
-	| kind_v=KIND LCURL name=TEXT COMMA e=properties RCURL
-	{ name, e.%{ str kind ^= kind_v & uid.f ^= name } }
+	| kind=KIND LCURL name=TEXT COMMA e=properties RCURL
+	{ {Fields.uid=name; kind; raw=e} }
 
 properties:
-	| key=TEXT EQUAL LCURL p=rtext RCURL COMMA e=properties { e.%{ key $= p } }
-	| key=TEXT EQUAL LCURL p=rtext RCURL opt_comma { entry_start.%{ key $= p } }
+	| key=TEXT EQUAL LCURL p=rtext RCURL COMMA e=properties
+	  { Fields.Database.add (String.trim key) p e }
+	| key=TEXT EQUAL LCURL p=rtext RCURL opt_comma
+	  { Fields.Database.singleton (String.trim key) p }
 
 opt_comma:
 	| 	{()}

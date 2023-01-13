@@ -105,3 +105,38 @@ let get_state entry = match entry.%{state.f} with None -> WIP | Some x -> x
 type entry = Record.t
 module Database=Map.Make(String)
 type data = entry Database.t
+
+type raw_entry = { uid:string; kind:string; raw: string Database.t  }
+let default_keys =
+  let ( |>> ) database named_field =
+    Database.add named_field.name (str named_field) database
+  in
+  Database.empty
+  |>> title
+  |>> authors
+  |>> journal
+  |>> year
+  |>> volume
+  |>> number
+  |>> pages
+  |>> doi
+  |>> arxiv
+  |>> abstract
+  |>> state
+  |>> tags
+  |>> src
+  |>> booktitle
+  |>> location
+  |>> conference
+
+let check_entry keydtb raw_entry =
+  let add key value e =
+    match Database.find key keydtb with
+    | exception Not_found ->  e.%{ raw |= fun m -> Database.add key value m }
+    | key -> e.%{ key ^= value }
+  in
+  let init = create [ str uid ^= raw_entry.uid; str kind ^= raw_entry.kind; raw ^= Database.empty ] in
+  Database.fold add raw_entry.raw init
+
+let check ?(with_keys=default_keys) raw =
+  Database.map (check_entry with_keys) raw

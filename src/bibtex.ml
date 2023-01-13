@@ -3,17 +3,7 @@ module Fields = Fields
 
 module Database= Fields.Database
 
-		   
-module Parser = struct
-include(Parser)
-let add_field key= let open Parser_aux in
-		 keydtb := !keydtb |>> key
-let remove_field key = let open Parser_aux in
-		 let open Fields in
-		 keydtb := Database.remove key.name !keydtb
-end
-					   
-let parse=Parser.main Lexer.main 
+let parse ?with_keys lexbuf = Fields.check ?with_keys (Parser.main Lexer.main lexbuf)
 
 module MicroP = MicroP
 module MicroL=MicroL
