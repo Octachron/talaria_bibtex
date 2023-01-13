@@ -2,8 +2,10 @@ open Bibtex
 let p=Printf.printf
 let f=open_in "test.bib"
 
+module Scan_test = struct
+  [@@@warning "-unused-value-declaration"]
 
-let rec scanp lexb= match MicroL.pages lexb with
+  let rec scanp lexb= match MicroL.pages lexb with
 	| MicroP.EOF -> p "EOF \n"
 	| MicroP.NUM(n) -> p "Num(%d)" n; scanp lexb
 	| MicroP.MINUS -> p "<->"; scanp lexb
@@ -14,9 +16,7 @@ let rec scanp lexb= match MicroL.pages lexb with
 
 
 
-let bib = parse @@ Lexing.from_channel f
-
-let rec scan lexbuf= match Lexer.main lexbuf with
+  let rec scan lexbuf= match Lexer.main lexbuf with
 	| EOF -> p "EOF \n"
 	| TEXT(s) -> p "text: \"%s\" \n" s ; scan lexbuf
 	| LCURL -> p "<" ; scan lexbuf
@@ -24,6 +24,10 @@ let rec scan lexbuf= match Lexer.main lexbuf with
 	| COMMA -> p ":,:"; scan lexbuf
 	| KIND s->p "Type \"%s\"" s; scan lexbuf
 	| EQUAL -> p "="; scan lexbuf
+end
+
+let bib = parse @@ Lexing.from_channel f
+
 
 let mayr entry field f = let open Fields in  match entry.%{field.f} with
 | None -> ()
@@ -31,10 +35,6 @@ let mayr entry field f = let open Fields in  match entry.%{field.f} with
 
 let ( *? ) = mayr
 
-
-
-let mayp field fmt entry=
-entry *? field @@ p fmt
 
 let decorated op en pr e = print_string op; pr e; print_string en
 
