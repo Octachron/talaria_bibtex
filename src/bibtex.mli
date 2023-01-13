@@ -1,4 +1,4 @@
-module Fields = Bibtex_fields
+module Fields = Fields
 
 module Database = Fields.Database
 

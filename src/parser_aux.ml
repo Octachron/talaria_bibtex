@@ -1,4 +1,4 @@
-open Bibtex_fields	
+open Fields
 
 let ( |>> ) database named_field =
   Database.add named_field.name (str named_field) database

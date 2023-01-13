@@ -1,12 +1,12 @@
 %token <string> TEXT
 %token <string> KIND
 %token LCURL COMMA RCURL EQUAL EOF
-%type <Bibtex_fields.data> main
+%type <Fields.data> main
 %start main
 
 %{
 open Parser_aux
-open Bibtex_fields
+open Fields
 %}
 
 %%
