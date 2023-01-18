@@ -1,6 +1,6 @@
 (** Predefined Bibtex fields *)
 
-include (module type of MicroT)
+include Field_types.self
 
 exception Unknown_attribute of string * string
 

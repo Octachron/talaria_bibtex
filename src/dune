@@ -1,5 +1,5 @@
-(menhir (modules parser microP))
-(ocamllex (modules lexer microL))
+(menhir (modules parser field_parsers))
+(ocamllex (modules lexer field_lexers))
 
 (library
  (name bibtex)

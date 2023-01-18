@@ -1,4 +1,4 @@
-include MicroT
+include Field_types
 
 
 exception Unknown_attribute of string*string
@@ -19,7 +19,7 @@ module RawMap = Map.Make(String)
 let strset_field = named_field Record.{
     to_ =  ( fun x -> x |> StrSet.elements |> String.concat "," ) ;
     from = ( fun x -> x |> Lexing.from_string |>
-                      MicroP.tags MicroL.tags |> StrSet.of_list )
+                      Field_parsers.tags Field_lexers.tags |> StrSet.of_list )
   }
 
 let uid = str_field "uid"
@@ -51,7 +51,7 @@ let authors =
              List.map (fun {firstname; lastname} ->
                  String.concat ", " [lastname;firstname]
                ) p );
-      from = (fun s -> s |> Lexing.from_string |>  MicroP.names MicroL.names )
+      from = (fun s -> s |> Lexing.from_string |> Field_parsers.names Field_lexers.names )
     }
 
 let year = int_field "year"
@@ -65,13 +65,13 @@ let pages =
   named_field Record.{
       to_ = (function Loc n -> string_of_int n | Interv (k,l) ->
           Printf.sprintf "%d-%d" k l);
-      from = ( fun s -> s |> Lexing.from_string |>  MicroP.pages MicroL.pages )
+      from = ( fun s -> s |> Lexing.from_string |>  Field_parsers.pages Field_lexers.pages )
     }
 
 let doi =
   "doi" |> named_field Record.{
       to_ = String.concat "/" ;
-      from = (fun s ->  s |> Lexing.from_string |> MicroP.path MicroL.path)
+      from = (fun s ->  s |> Lexing.from_string |> Field_parsers.path Field_lexers.path)
     }
 
 let arxiv = str_field "arxiv"

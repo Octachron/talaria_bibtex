@@ -5,12 +5,12 @@
 %token COMMA, MINUS, AND, EOF, SEP
 
 %{
-open MicroT
+open Field_types
 %}
 
-%type <MicroT.name list> names
+%type <Field_types.name list> names
 %type <string list> tags
-%type <MicroT.pages> pages
+%type <Field_types.pages> pages
 %type <string list> path
 %start pages tags names path
 

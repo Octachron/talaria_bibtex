@@ -7,14 +7,14 @@ let int = Format.pp_print_int
 module Scan_test = struct
   [@@@warning "-unused-value-declaration"]
 
-  let rec scanp ppf lexb= match MicroL.pages lexb with
-	| MicroP.EOF -> fp ppf "EOF \n"
-	| MicroP.NUM(n) -> fp ppf "Num(%d)" n; scanp ppf lexb
-	| MicroP.MINUS -> fp ppf "<->"; scanp ppf lexb
-	| MicroP.WORD(s)-> fp ppf "WORD(%s)\n" s; scanp ppf lexb
-	| MicroP.COMMA -> fp ppf "<,>"
-	| MicroP.AND -> fp ppf "<and>"
-	| MicroP.SEP -> fp ppf "</>"; scanp ppf lexb
+  let rec scanp ppf lexb= match Field_lexers.pages lexb with
+	| Field_parsers.EOF -> fp ppf "EOF \n"
+	| Field_parsers.NUM(n) -> fp ppf "Num(%d)" n; scanp ppf lexb
+	| Field_parsers.MINUS -> fp ppf "<->"; scanp ppf lexb
+	| Field_parsers.WORD(s)-> fp ppf "WORD(%s)\n" s; scanp ppf lexb
+	| Field_parsers.COMMA -> fp ppf "<,>"
+	| Field_parsers.AND -> fp ppf "<and>"
+	| Field_parsers.SEP -> fp ppf "</>"; scanp ppf lexb
 
 
 
