@@ -19,24 +19,24 @@ Bitex items are stored inside a string map using their identifiants
 let item = Bibtex.Database.find "Nothingness" dtb
 ```
 
-Item fields can be accessed using the open record syntax (see [orec](https://github.com/Octachron/orec)). For convenience, the module Bibtex_fields(=Bibtex.Fields) define a `'a named_field` type which combines an access field with a name and a conversion function to string. The list of predefined fields can be found in the `Bibtex_fields` module.   
+Item fields can be accessed using the open record syntax (see [orec](https://github.com/Octachron/orec)). For convenience, the module Bibtex_fields(=Bibtex.Fields) define a `'a named_field` type which combines an access field with a name and a conversion function to string. The list of predefined fields can be found in the `Bibtex_fields` module.
 
 ```Ocaml
 let () =
     let open Bibtex.Fields in
-    assert ( item.{year.f} = Some 1995 );
-    assert( item.{page.f} = Some ( Interv(0,0) ) );
-    assert( item.{title.f} = Some "On empty articles" )
+    assert ( item.%{year.f} = Some 1995 );
+    assert( item.%{page.f} = Some ( Interv(0,0) ) );
+    assert( item.%{title.f} = Some "On empty articles" )
 
 ```
 
-If needed, more fields can be added to the parser by using the `Bibtex.Parser.add_field` function. 
+If needed, more fields can be added to the parser by using a custom [~with_keys] arguments.
 
 First-class fields allow to write generic function like
 ```Ocaml
 let mayp field fmt =
   let open Bibtex.Fields in
-  match item.{field} with
+  match item.%{field} with
   | None -> ()
   | Some x -> Printf.printf fmt x  
 
@@ -70,7 +70,7 @@ pages={0-0}
 let item = Bibtex.Database.find "Nothingness" dtb
 let mayp field fmt =
   let open Bibtex.Fields in
-  match item.{field} with
+  match item.%{field} with
   | None -> ()
   | Some x -> Printf.printf fmt x  
 
