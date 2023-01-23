@@ -12,7 +12,7 @@ include Orec.Namespace.S [@@odoc.inline off]
 *)
 type 'a named_field = {name : string; f:'a field; conv:('a,string) bijection }
 
-(** The exception {Unknown_attribute} is raised whenever a type dkey fails to parse
+(** The exception {!Unknown_attribute} is raised whenever a type dkey fails to parse
     its contents to its underlying type.
 *)
 exception Unknown_attribute of string * string
