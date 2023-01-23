@@ -14,7 +14,7 @@
   (name talaria-bibtex)
   (version 0.5.0)
   (license GPL-3.0-or-later)
-  (synopsis "Alternative ocaml dependency analyzer")
+  (synopsis "A parser for Bibtex files")
   (depends orec dune (menhir (>= 20180523)) (ocaml (>= 4.08)))
   (description "Talaria-bibtex is a parser for bibtex files. Talaria-bibtex parses bibtex-file into record
    with an extensible sets of known fields to make it easy to handle well-formed bibtex file and
