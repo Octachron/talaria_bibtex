@@ -12,8 +12,10 @@ license: "GPL-3.0-or-later"
 homepage: "https://github.com/Octachron/talaria_bibtex"
 bug-reports: "https://github.com/Octachron/talaria_bibtex/issues"
 depends: [
-  "dune" {>= "3.0"}
+  "orec"
+  "dune" {>= "2.7"}
   "menhir" {>= "20180523"}
+  "ocaml" {>= "4.08"}
   "odoc" {with-doc}
 ]
 build: [
