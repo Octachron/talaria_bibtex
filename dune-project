@@ -13,7 +13,7 @@
 (package
   (name talaria-bibtex)
   (version 0.5.0)
-  (license GPL-3.0-or-later)
+  (license "LGPL-3.0-or-later WITH OCaml-LGPL-linking-exception")
   (synopsis "A parser for Bibtex files")
   (depends orec dune (menhir (>= 20180523)) (ocaml (>= 4.08)))
   (description "Talaria-bibtex is a parser for bibtex files. Talaria-bibtex parses bibtex-file into record
