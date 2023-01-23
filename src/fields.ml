@@ -9,7 +9,7 @@ include(Record)
 type 'a named_field =
   { name : string; f : 'a Record.field ; conv: ('a,string) Record.bijection }
 let str named_field = Record.( named_field.f @: named_field.conv )
-let named_field conv name  = {name; f=Record.new_field (); conv }
+let named_field ~name conv = {name; f=Record.new_field (); conv }
 let str_field = let id x = x in named_field Record.{ to_ = id ; from = id }
 let int_field = named_field Record.{to_ = string_of_int; from = int_of_string }
 
@@ -22,10 +22,10 @@ let strset_field = named_field Record.{
                       Field_parsers.tags Field_lexers.tags |> StrSet.of_list )
   }
 
-let uid = str_field "uid"
+let uid = str_field  ~name:"uid"
 let raw : string RawMap.t Record.field = Record.new_field ()
 
-let kind = "kind" |> named_field Record.{
+let kind = named_field ~name:"kind" Record.{
              to_ = (function
                 | Article -> "article"
                 | Inproceedings -> "inproceedings"
@@ -42,10 +42,10 @@ let kind = "kind" |> named_field Record.{
                 | s  -> raise @@ Unknown_attribute ("kind",s)  )
            }
 
-let title = str_field "title"
+let title = str_field ~name:"title"
 
 let authors =
-  "author" |> named_field
+   named_field ~name:"author"
     Record.{
       to_ =( fun p -> String.concat " and " @@
              List.map (fun {firstname; lastname} ->
@@ -54,32 +54,31 @@ let authors =
       from = (fun s -> s |> Lexing.from_string |> Field_parsers.names Field_lexers.names )
     }
 
-let year = int_field "year"
-let journal = str_field "journal"
-let booktitle=str_field "booktitle"
+let year = int_field ~name:"year"
+let journal = str_field ~name:"journal"
+let booktitle=str_field ~name:"booktitle"
 
-let volume = int_field "volume"
-let number = int_field "number"
+let volume = int_field ~name:"volume"
+let number = int_field ~name:"number"
 let pages =
-  "pages" |>
-  named_field Record.{
+  named_field ~name:"pages" Record.{
       to_ = (function Loc n -> string_of_int n | Interv (k,l) ->
           Printf.sprintf "%d-%d" k l);
       from = ( fun s -> s |> Lexing.from_string |>  Field_parsers.pages Field_lexers.pages )
     }
 
 let doi =
-  "doi" |> named_field Record.{
+  named_field ~name:"doi" Record.{
       to_ = String.concat "/" ;
       from = (fun s ->  s |> Lexing.from_string |> Field_parsers.path Field_lexers.path)
     }
 
-let arxiv = str_field "arxiv"
+let arxiv = str_field ~name:"arxiv"
 
-let tags = strset_field "tags"
-let src = strset_field "src"
+let tags = strset_field ~name:"tags"
+let src = strset_field ~name:"src"
 
-let state= "state" |> named_field Record.{
+let state= named_field ~name:"state" Record.{
     to_ = (  function Published -> "published"
                     | Accepted -> "accepted"
                     | Submitted -> "submitted"
@@ -92,9 +91,9 @@ let state= "state" |> named_field Record.{
                 | s -> raise @@ Unknown_attribute ("state",s) )
            }
 
-let abstract = str_field "abstract"
-let location = str_field "location"
-let conference = str_field "conference"
+let abstract = str_field ~name:"abstract"
+let location = str_field  ~name:"location"
+let conference = str_field  ~name:"conference"
 
 let get_uid entry = match entry.%{uid.f} with None -> assert false | Some x -> x
 let get_kind entry = match entry.%{kind.f} with
