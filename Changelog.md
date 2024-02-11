@@ -1,3 +1,7 @@
+## 0.6
+
+- Support `--` in page rank 
+
 ## 0.5 (23 January 2023)
 
 - First opam release

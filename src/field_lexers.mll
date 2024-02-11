@@ -17,6 +17,7 @@ rule pages=parse
 | space {pages lexbuf}
 | nnum+ as s { WORD s }
 | num+ as n { NUM(int_of_string n)} 
+| "--" { MINUSMINUS }
 | '-' { MINUS }
 | eof {EOF}
 

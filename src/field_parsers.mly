@@ -2,7 +2,7 @@
 
 %token <string> WORD
 %token <int> NUM
-%token COMMA, MINUS, AND, EOF, SEP
+%token COMMA, MINUS, MINUSMINUS, AND, EOF, SEP
 
 %{
 open Field_types
@@ -16,10 +16,14 @@ open Field_types
 
 %%
 
+%inline page_sep:
+  | MINUS  { () }
+  | MINUSMINUS { () }
+
 %public pages:
 	| l=NUM EOF{ Loc l }
 	| WORD l=NUM EOF{Loc l}
-	| l=NUM MINUS u=NUM EOF{Interv (l,u)}
+	| l=NUM page_sep u=NUM EOF{Interv (l,u)}
 
 %public tags:
 	| t=WORD EOF {[t]}

@@ -11,6 +11,7 @@ module Scan_test = struct
 	| Field_parsers.EOF -> fp ppf "EOF \n"
 	| Field_parsers.NUM(n) -> fp ppf "Num(%d)" n; scanp ppf lexb
 	| Field_parsers.MINUS -> fp ppf "<->"; scanp ppf lexb
+	| Field_parsers.MINUSMINUS -> fp ppf "<-->"; scanp ppf lexb
 	| Field_parsers.WORD(s)-> fp ppf "WORD(%s)\n" s; scanp ppf lexb
 	| Field_parsers.COMMA -> fp ppf "<,>"
 	| Field_parsers.AND -> fp ppf "<and>"
